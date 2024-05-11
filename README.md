@@ -10,11 +10,10 @@ the idea is to compare server-side rendering speed on the different frameworks.
 
 ## Javascript Frameworks evaluated
 
-- Next.js
-- SvelteKit
-- Nuxt
-- Quasar
 - Gatsby
+- Next.js
+- Nuxt
+- SvelteKit
 
 IMPORTANT: While I have good working experience with Nuxt, I don't have on the
 other frameworks, so I'll try my best to follow standard practices and try to
@@ -44,4 +43,4 @@ default routing and no state management.
 
 ## Benchmarks
 
-Node 20.13is used
+Node 20.13 is used
