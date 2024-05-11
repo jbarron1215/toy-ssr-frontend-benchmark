@@ -1,0 +1,14 @@
+{
+  "name": "toy-ssr-frontend-benchmark",
+  "module": "bench-all.js",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "fastify": "^4.27.0"
+  }
+}
