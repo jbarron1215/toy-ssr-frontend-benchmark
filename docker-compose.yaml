@@ -1,0 +1,12 @@
+version: '3'
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3210:3210 # fastify
+      - 3001:3001 # angular
+      - 3002:3002 # next
+      - 3003:3003 # nuxt
+      - 3004:3004 # svelte

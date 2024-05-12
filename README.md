@@ -10,18 +10,19 @@ the idea is to compare server-side rendering speed on the different frameworks.
 
 ## Javascript Frameworks evaluated
 
-- Gatsby
+- Angular
 - Next.js
 - Nuxt
 - SvelteKit
 
-IMPORTANT: While I have good working experience with Nuxt, I don't have on the
-other frameworks, so I'll try my best to follow standard practices and try to
-get the most of them to make it a fair comparison.
+IMPORTANT: While I have good working experience with Nuxt, and have played a
+little bit with React, I don't have on the other frameworks, so I'll try to
+follow standard practices and try to get the most of them to make it a fair
+comparison.
 
 Fair comparison implies writing the apps in the most standard and
-straightforward way, not to come up with perferse ways in which to gain
-performance.
+straightforward way without investing a lot of time, not to come up with
+perverse ways in which to gain performance.
 
 ## Endpoints
 
@@ -40,6 +41,10 @@ The following endpoints have been defined and will be benchmarked:
 
 All pages will include a very simple HTML file (e.g purecss.io), very simple
 default routing and no state management.
+
+NOTE: on Angular, after spending 10 minutes I've been unable to create a basic
+component. Probably part of it was that I did not follow any tutorials. Note that
+this is just a toy project, and having the basic page is enough to play.
 
 ## Benchmarks
 
