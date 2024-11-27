@@ -1,5 +1,5 @@
+// hello
+
 export default function Page() {
-  return <div>
-    Hello World from Page!
-  </div>
+  return <div>Hello World from Page!</div>;
 }

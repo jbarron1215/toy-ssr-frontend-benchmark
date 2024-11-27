@@ -11,7 +11,7 @@ const fs = require("fs");
 const util = require("util");
 const { exec } = require("child_process");
 const autocannon = require("autocannon");
-const libUtil = require("./libs/util");
+const libUtil = require("./libs/util.cjs");
 
 const execAsync = util.promisify(exec);
 
@@ -88,7 +88,7 @@ async function benchmarkUrlWithWrk(config, url) {
 // Start & stop test server and perform HTTP requests to measure performance
 // -----------------------------------------------------------------------------
 async function testFramework(loadTestingTool, framework, config) {
-  const path = config.path.replace(/^\/+/, '')
+  const path = config.path.replace(/^\/+/, "");
 
   // warmup for 1 second
   if (config.warmup)
@@ -127,11 +127,11 @@ async function testFramework(loadTestingTool, framework, config) {
 // -----------------------------------------------------------------------------
 async function main() {
   const frameworks = [
-    { name: "fastify", port: 3210, version : '4.28'},
-    { name: "angular", port: 3001, version : '18.0'},
-    { name: "next", port: 3002, version : '14.2'},
-    { name: "nuxt", port: 3003, version : '3.11'},
-    { name: "svelte", port: 3004, version: '4.2'},
+    // { name: "fastify", port: 3210, version : '4.28'},
+    // { name: "angular", port: 3001, version : '18.0'},
+    { name: "next", port: 3002, version: "15" },
+    // { name: "nuxt", port: 3003, version : '3.11'},
+    // { name: "svelte", port: 3004, version: '4.2'},
   ];
 
   console.log(" ");
@@ -142,31 +142,35 @@ async function main() {
   console.log("  Connections:  ", g_testConfig.connections);
   console.log(" ");
 
-  await libUtil.setup()
-/* FIXME!  await execAsync("docker-compose up -d");
+  await libUtil.setup();
+  /* FIXME!  await execAsync("docker-compose up -d");
   await new Promise((x) => setTimeout(x, 10*1000)) // wait for servers to start
 */
 
   const endpoints = {
-    hello: "/hello",
-    helloComponent: "/hello-component",
-    helloFetch: "/hello-fetch",
+    staticPage: "/hello",
+    staticPageWithComponent: "/hello-component",
+    dynamicPage: "/hello-dynamic",
+    pageWithDynamicComponent: "/hello-dynamic-component",
+    pageWithLazyLoadedDynamicComponent: "/hello-dynamic-component-import",
+    pageWithFetch: "/hello-fetch",
+    pageWithFetchCached: "/hello-fetch-cache",
+    apiRouteHandler: "/api",
     // NOTE: some frameworks only use cache on the client and not on the server
-    helloFetchCache: "/hello-fetch-cache"
   };
 
   const allResults = [];
-  for (const [pathName, pathToTest] of Object.entries(
-    endpoints
-  )) {
-    if (process.env.BENCH_FILTER && !pathName.includes(process.env.BENCH_FILTER))
+  for (const [pathName, pathToTest] of Object.entries(endpoints)) {
+    if (
+      process.env.BENCH_FILTER &&
+      !pathName.includes(process.env.BENCH_FILTER)
+    )
       continue;
 
     const results = [];
     for (const framework of frameworks) {
       // NOTE: only react has proper server-side cache implementation so far
-      if (pathName === 'helloFetchCache' && framework.name !== 'next')
-        continue;
+      if (pathName === "helloFetchCache" && framework.name !== "next") continue;
 
       console.error(`Testing ${framework.name} (${pathName})...`);
 
@@ -188,13 +192,10 @@ async function main() {
 
   console.log("All:");
   console.log(libUtil.generateMarkdownTable(allResults) + "\n\n");
-// FIXME!  await execAsync("docker-compose down");
+  // FIXME!  await execAsync("docker-compose down");
 
   // save output
-  fs.writeFileSync(
-    'last-result.json',
-    JSON.stringify(allResults, null, 2)
-  )
+  fs.writeFileSync("last-result.json", JSON.stringify(allResults, null, 2));
 }
 
 main();
